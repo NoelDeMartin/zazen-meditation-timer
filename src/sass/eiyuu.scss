@@ -1,0 +1,80 @@
+@import "../../node_modules/normalize.css/normalize";
+@import "eiyuu.mixins";
+
+/* Layout */
+
+.fullpage {
+    width: 100vw;
+    height: 100vh;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-center {
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+/* Fonts */
+
+$sizeTiny: 0.5rem;
+.size-1, .size-tiny {
+    font-size: $sizeTiny;
+}
+
+$sizeSmall: 0.707rem;
+.size-2, .size-small {
+    font-size: $sizeSmall;
+}
+
+$sizeNormal: 1rem;
+.size-3, .size-normal {
+    font-size: $sizeNormal;
+}
+
+$sizeBig: 1.414rem;
+.size-4, .size-big {
+    font-size: $sizeBig;
+}
+
+$sizeLarge: 1.999rem;
+.size-5, .size-large {
+    font-size: $sizeBig;
+}
+
+$sizeHuge: 2.827rem;
+.size-6, .size-huge {
+    font-size: $sizeHuge;
+}
+
+$sizeHumongous: 3.998rem;
+.size-7, .size-humongous {
+    font-size: $sizeHumongous;
+}
+
+.hero-title {
+    text-align: center;
+
+    .title {
+        font-size: $sizeHuge;
+        margin-bottom: 0;
+    }
+
+    .subtitle {
+        font-size: $sizeNormal;
+        margin-top: 0;
+    }
+
+}
