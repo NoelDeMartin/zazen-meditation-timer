@@ -4,7 +4,6 @@ export default class Timer {
 
     private _startDate: Date | null = null;
     private _currentDate: Date | null = null;
-    private _running: boolean = false;
     private _pausedTime: number = 0;
 
     public constructor(duration: number) {
@@ -12,9 +11,10 @@ export default class Timer {
     }
 
     get runningTime(): number {
-        return this._startDate && this._currentDate
-                ? this._pausedTime + ((this._currentDate.getTime() - this._startDate.getTime()) / 1000)
-                : 0;
+        return this._pausedTime +
+                (this._startDate && this._currentDate
+                    ? ((this._currentDate.getTime() - this._startDate.getTime()) / 1000)
+                    : 0);
     }
 
     get timeLeft(): number {
@@ -26,37 +26,41 @@ export default class Timer {
     }
 
     get playing(): boolean {
-        return this._running && !this.completed && !!this._startDate;
+        return !this.completed && !!this._startDate;
     }
 
     get progress(): number {
         return 1 - (this.timeLeft / this.duration);
     }
 
-    get running(): boolean {
-        return this._running;
+    get durationForHumans(): string {
+        return ('00' + Math.floor(this.duration / 60)).substr(-2) + ':' +
+                ('00' + this.duration % 60).substr(-2);
     }
 
-    public start(): void {
-        this._startDate = new Date();
-        this._currentDate = this._startDate;
-        this._running = true;
-        this._pausedTime = 0;
+    get timeLeftForHumans(): string {
+
+        let timeLeft = Math.round(this.timeLeft);
+
+        return ('00' + Math.floor(timeLeft / 60)).substr(-2) + ':' +
+                ('00' + timeLeft % 60).substr(-2);
     }
 
-    public pause(): void {
-        this._running = false;
-        this._pausedTime = this.runningTime;
-    }
-
-    public resume(): void {
-        this._running = true;
+    public play(): void {
         this._startDate = new Date();
         this._currentDate = new Date();
     }
 
+    public pause(): void {
+        this._pausedTime = this.runningTime;
+        this._startDate = null;
+        this._currentDate = null;
+    }
+
     public stop(): void {
-        this._running = false;
+        this._pausedTime = 0;
+        this._startDate = null;
+        this._currentDate = null;
     }
 
     public update(): void {

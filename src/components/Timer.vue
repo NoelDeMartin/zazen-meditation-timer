@@ -57,7 +57,7 @@
         <timer-progress :progress="model.progress"></timer-progress>
 
         <span class="time size-huge">
-            {{ timeLeft }}
+            {{ model.timeLeftForHumans }}
         </span>
 
         <div class="buttons">
@@ -76,11 +76,11 @@
                     <i class="fa fa-pause" aria-hidden="true"></i>
                 </div>
 
-                <div class="button" @click="stop">
-                    <i class="fa fa-repeat" aria-hidden="true"></i>
-                </div>
-
             </template>
+
+            <div v-if="model.progress > 0" class="button" @click="stop">
+                <i class="fa fa-repeat" aria-hidden="true"></i>
+            </div>
 
         </div>
 
@@ -110,28 +110,23 @@
         bell: any = null;
         animationCallback: any = null;
 
-        get timeLeft(): string {
-
-            let timeLeft = Math.round(this.model.timeLeft);
-
-            return ('00' + Math.floor(timeLeft / 60)).substr(-2) + ':' +
-                    ('00' + timeLeft % 60).substr(-2);
-        }
-
         public play(): void {
 
             if (this.bell == null) {
                 this.bell = new Audio('bell.wav');
             }
 
-            if (!this.model.running) {
+            if (this.model.progress == 0) {
                 this.bell.play();
-                this.model.start();
+            }
+
+            if (!this.model.playing) {
+                this.model.play();
             }
 
             requestAnimationFrame(this.animationCallback = () => {
                 this.model.update();
-                if (this.model.running && !this.model.completed) {
+                if (this.model.playing) {
                     requestAnimationFrame(this.animationCallback);
                 }
             });
