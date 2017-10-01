@@ -1,7 +1,5 @@
 <style lang="scss">
 
-    @import "../sass/globals";
-
     .timer-progress {
         position: relative;
         z-index: -1;

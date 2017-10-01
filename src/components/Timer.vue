@@ -1,7 +1,5 @@
 <style lang="scss">
 
-    @import "../sass/globals";
-
     $timer-dimensions: 200px;
     $button-dimensions: 50px;
 
