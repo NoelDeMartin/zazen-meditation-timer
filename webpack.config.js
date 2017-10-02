@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ClearPlugin = require('clean-webpack-plugin');
 
 let inProduction = process.env.NODE_ENV === 'production';
 
@@ -15,7 +16,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        filename: '[name].[hash].js'
     },
 
     module: {
@@ -80,7 +81,12 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin('[name].css'),
+        new ClearPlugin(['dist'], {
+            dist: __dirname,
+            verbose: true,
+            dry: false,
+        }),
+        new ExtractTextPlugin('[name].[hash].css'),
         new webpack.LoaderOptionsPlugin({
             minimize: inProduction
         }),
@@ -91,7 +97,26 @@ module.exports = {
                         NODE_ENV: '"production"'
                     }
                     : {}
-        })
+        }),
+        function() {
+            this.plugin('done', stats => {
+
+                const fs = require('fs');
+                const Mustache = require('mustache');
+
+                let index = fs.readFileSync(path.resolve(__dirname, 'src/index.html'), 'utf8');
+                let assets = stats.toJson().assetsByChunkName;
+
+                fs.writeFileSync(
+                    path.resolve(__dirname, 'index.html'),
+                    Mustache.render(index, {
+                        js: assets.app[0],
+                        css: assets.app[1],
+                    })
+                );
+
+            });
+        }
     ],
 
     resolve: {
