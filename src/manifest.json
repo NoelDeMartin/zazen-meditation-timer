@@ -24,7 +24,7 @@
     "description": "Meditation timer",
     "theme_color": "#9bc372",
     "background_color": "#9bc372",
-    "start_url": "/",
+    "start_url": "/zazen-meditation-timer/",
     "display": "fullscreen",
     "orientation": "portrait"
 }
