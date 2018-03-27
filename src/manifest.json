@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "short_name": "Zazen Meditation Timer",
+    "name": "Zazen Meditation Timer",
+    "icons": [
+        {
+            "src": "build/icons/icon_32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "build/icons/icon_64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        },
+        {
+            "src": "build/icons/icon_256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "version": "0.0.1",
+    "default_locale": "en",
+    "description": "Meditation timer",
+    "theme_color": "#9bc372",
+    "background_color": "#9bc372",
+    "start_url": "/",
+    "display": "fullscreen",
+    "orientation": "portrait"
+}

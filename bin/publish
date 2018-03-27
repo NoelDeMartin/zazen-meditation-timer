@@ -11,7 +11,8 @@ mkdir $TMP_DIR
 cp index.html $TMP_DIR
 cp manifest.json $TMP_DIR
 cp service-worker.js $TMP_DIR
-cp dist $TMP_DIR -r
+cp bell.wav $TMP_DIR
+cp build $TMP_DIR -r
 
 cd $TMP_DIR
 git init

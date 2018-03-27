@@ -2,7 +2,10 @@ node_modules
 npm-debug.log
 yarn-error.log
 mix-manifest.json
-dist
+build
 index.html
+!src/index.html
 service-worker.js
+!src/service-worker.js
 manifest.json
+!src/manifest.json

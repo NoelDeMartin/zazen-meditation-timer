@@ -5,7 +5,7 @@
 
     #app {
         background: #eeffdc;
-        overflow: scroll;
+        overflow: auto;
 
         .hero-title {
 

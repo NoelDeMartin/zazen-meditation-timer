@@ -16,7 +16,7 @@ module.exports = {
     },
 
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
         filename: '[name].js'
     },
 
@@ -91,7 +91,7 @@ module.exports = {
     },
 
     plugins: [
-        new ClearPlugin(['dist'], {
+        new ClearPlugin(['build'], {
             dist: __dirname,
             verbose: true,
             dry: false,
@@ -111,7 +111,7 @@ module.exports = {
         new CopyPlugin([
             {
                 from: path.resolve(__dirname, 'src/icons/*.png'),
-                to: path.resolve(__dirname, 'dist/icons/[name].[ext]'),
+                to: path.resolve(__dirname, 'build/icons/[name].[ext]'),
             },
             {
                 from: path.resolve(__dirname, 'src/index.html'),
