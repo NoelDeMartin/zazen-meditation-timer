@@ -1,12 +1,13 @@
 <style lang="scss">
 
-    $timer-dimensions: 200px;
-    $button-dimensions: 50px;
+    $timer-dimensions: 350px;
+    $button-dimensions: 60px;
 
     .timer {
         width: $timer-dimensions;
         height: $timer-dimensions;
         position: relative;
+        flex-shrink: 0;
 
         @include flex-center();
 
@@ -15,10 +16,14 @@
         }
 
         .time {
+            z-index: 10;
+            color: #2b1100;
             margin-bottom: 20px;
+            font-family: 'Comfortaa', cursive;
         }
 
         .buttons {
+            z-index: 10;
 
             @include flex-center('row');
 
@@ -27,13 +32,14 @@
                 height: $button-dimensions;
                 border-radius: $button-dimensions / 2;
                 cursor: pointer;
-                background: darken(white, 5%);
                 font-size: $button-dimensions * 0.4;
+                color: #2b1100;
+                background: #e09d72;
 
                 @include flex-center();
 
                 &:hover {
-                    background: darken(white, 10%);
+                    background: #a1622b;
                 }
 
                 &:not(:last-child) {
@@ -54,7 +60,7 @@
 
         <timer-progress :progress="model.progress"></timer-progress>
 
-        <span class="time size-huge">
+        <span class="time size-humongous">
             {{ model.timeLeftForHumans }}
         </span>
 
@@ -126,6 +132,8 @@
                 this.model.update();
                 if (this.model.playing) {
                     requestAnimationFrame(this.animationCallback);
+                } else if (this.model.completed) {
+                    this.bell.play();
                 }
             });
 

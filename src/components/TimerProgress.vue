@@ -2,7 +2,6 @@
 
     .timer-progress {
         position: relative;
-        z-index: -1;
 
         .background, .fill-right, .fill-left, .bar {
             @include fill-absolute();
@@ -10,7 +9,7 @@
 
         .background {
             border-radius: 50%;
-            border: 5px solid grey;
+            border: 15px solid #e09d72;
         }
 
         .fill-left, .fill-right {
@@ -19,7 +18,7 @@
 
         .bar {
             border-radius: 50%;
-            border: 5px solid red;
+            border: 15px solid #a1622b;
         }
 
         .fill-right {

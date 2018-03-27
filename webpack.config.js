@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ClearPlugin = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 let inProduction = process.env.NODE_ENV === 'production';
 
@@ -11,12 +12,12 @@ module.exports = {
         app: [
             './src/app.ts',
             './src/app.scss'
-        ]
+        ],
     },
 
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[hash].js'
+        filename: '[name].js'
     },
 
     module: {
@@ -72,7 +73,16 @@ module.exports = {
                 test: /\.(ttf|eot|svg|woff(2)?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'file-loader',
                 options: {
-                    name: 'fonts/[name].[hash].[ext]'
+                    name: 'fonts/[name].[ext]'
+                }
+            },
+
+            // Images
+            {
+                test: /\.png$/,
+                loader: 'file-loader',
+                options: {
+                    name: 'img/[name].[ext]'
                 }
             },
 
@@ -86,7 +96,7 @@ module.exports = {
             verbose: true,
             dry: false,
         }),
-        new ExtractTextPlugin('[name].[hash].css'),
+        new ExtractTextPlugin('[name].css'),
         new webpack.LoaderOptionsPlugin({
             minimize: inProduction
         }),
@@ -98,25 +108,24 @@ module.exports = {
                     }
                     : {}
         }),
-        function() {
-            this.plugin('done', stats => {
-
-                const fs = require('fs');
-                const Mustache = require('mustache');
-
-                let index = fs.readFileSync(path.resolve(__dirname, 'src/index.html'), 'utf8');
-                let assets = stats.toJson().assetsByChunkName;
-
-                fs.writeFileSync(
-                    path.resolve(__dirname, 'index.html'),
-                    Mustache.render(index, {
-                        js: assets.app[0],
-                        css: assets.app[1],
-                    })
-                );
-
-            });
-        }
+        new CopyPlugin([
+            {
+                from: path.resolve(__dirname, 'src/icons/*.png'),
+                to: path.resolve(__dirname, 'dist/icons/[name].[ext]'),
+            },
+            {
+                from: path.resolve(__dirname, 'src/index.html'),
+                to: path.resolve(__dirname, 'index.html'),
+            },
+            {
+                from: path.resolve(__dirname, 'src/service-worker.js'),
+                to: path.resolve(__dirname, 'service-worker.js'),
+            },
+            {
+                from: path.resolve(__dirname, 'src/manifest.json'),
+                to: path.resolve(__dirname, 'manifest.json'),
+            },
+        ]),
     ],
 
     resolve: {

@@ -2,3 +2,7 @@ node_modules
 npm-debug.log
 yarn-error.log
 mix-manifest.json
+dist
+index.html
+service-worker.js
+manifest.json
