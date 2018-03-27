@@ -1,0 +1,22 @@
+#!/bin/sh
+
+CWD=`pwd`
+ROOT="$( cd "$( dirname "$0" )" && pwd )/../"
+TMP_DIR="/tmp/zazen-meditation-timer"
+
+cd $ROOT
+npm run prod
+rm -rf $TMP_DIR
+mkdir $TMP_DIR
+cp index.html $TMP_DIR
+cp manifest.json $TMP_DIR
+cp service-worker.js $TMP_DIR
+cp dist $TMP_DIR -r
+
+cd $TMP_DIR
+git init
+git add .
+git commit -m "Publish website"
+git push https://github.com/NoelDeMartin/zazen-meditation-timer master:gh-pages --force
+
+cd $CWD
